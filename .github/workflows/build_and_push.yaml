@@ -81,4 +81,4 @@ jobs:
         CLUSTER: dev
         RESOURCE: nais.yaml
         PRINT_PAYLOAD: "true"
-        VAR: image=${{ env.REGISTRY }}/tracing-demo:${{ needs.jobs.build_and_push.outputs.version }}
+        VAR: image=${{ env.REGISTRY }}/tracing-demo:${{ needs.build_and_push.outputs.version }}
