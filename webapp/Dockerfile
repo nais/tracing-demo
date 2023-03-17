@@ -1,6 +1,8 @@
-FROM node
+FROM node AS builder
 ADD . /src
-#RUN rm -rf /src/node_modules
 WORKDIR /src
 RUN npm install
-CMD ["npm", "run", "dev"]
+RUN npm run build
+
+FROM nginxinc/nginx-unprivileged
+COPY --from=builder /src/dist /usr/share/nginx/html
