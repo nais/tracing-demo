@@ -72,13 +72,10 @@ jobs:
     if: github.ref == 'refs/heads/main'
     steps:
     - uses: actions/checkout@v3
-    - name: Generate version
-      id: version
-      run: echo "version=$(date +'%Y%m%d-%H%M%S')-$(git rev-parse --short HEAD)" >> ${GITHUB_OUTPUT}
     - uses: nais/deploy/actions/deploy@v1
       env:
         DEPLOY_SERVER: deploy.dev-nais.cloud.nais.io:443
         APIKEY: ${{ secrets.DEPLOY_DEV_NAIS_DEV_KIMFOO }}
         CLUSTER: dev
         RESOURCE: nais.yaml
-        VAR: image=${{ env.REGISTRY }}/tracing-demo:${{ steps.version.outputs.version }}
+        VAR: image=${{ env.REGISTRY }}/tracing-demo:${{ jobs.build_and_push.steps.version.outputs.version }}
