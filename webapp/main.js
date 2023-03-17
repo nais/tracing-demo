@@ -2,7 +2,7 @@ import { getWebInstrumentations, initializeFaro } from '@grafana/faro-web-sdk';
 import { TracingInstrumentation } from '@grafana/faro-web-tracing';
 
 const faro = initializeFaro({
-    url: 'https://nais-tracing.dev.dev-nais.cloud.nais.io/collect',
+    url: 'https://tempo.dev.dev-nais.cloud.nais.io/collect',
     app: {
         name: 'tracing-demo',
         version: '1.0.0',
