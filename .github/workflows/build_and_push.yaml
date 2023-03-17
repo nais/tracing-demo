@@ -78,4 +78,5 @@ jobs:
         APIKEY: ${{ secrets.DEPLOY_DEV_NAIS_DEV_KIMFOO }}
         CLUSTER: dev
         RESOURCE: nais.yaml
+				PRINT_PAYLOAD: "true"
         VAR: image=${{ env.REGISTRY }}/tracing-demo:${{ needs.jobs.build_and_push.outputs.version }}
