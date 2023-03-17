@@ -63,21 +63,6 @@ jobs:
           labels: ${{ steps.metadata.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
-      - uses: actions/setup-node@64ed1c7eab4cce3362f8c340dee64e5eaeef8f7c # ratchet:actions/setup-node@v3
-        with:
-          node-version: 16
-      - run: npm ci
-      - run: npm run build
-      - name: Install cosign
-        uses: sigstore/cosign-installer@bd2d1189b064bcddc3903176a807dcdba72d7fd0 # ratchet:sigstore/cosign-installer@main
-        with:
-          cosign-release: 'v2.0.0'
-      - name: Sign the container image
-        run: cosign sign --yes ${{ env.REGISTRY }}/tracing-demo@${{ steps.build-push.outputs.digest }}
-      - name: Create SBOM
-        run: npx @cyclonedx/cyclonedx-npm --output-file sbom.json --output-format json
-      - name: Attest image
-        run: cosign attest --yes --predicate sbom.json --type cyclonedx ${{ env.REGISTRY }}/tracing-demo@${{ steps.build-push.outputs.digest }}
   rollout:
     permissions:
       id-token: write
@@ -90,7 +75,7 @@ jobs:
     - uses: nais/deploy/actions/deploy@v1
       env:
         SERVER: deploy.dev-nais.cloud.nais.io:443
-        APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
+        APIKEY: ${{ secrets.DEPLOY_DEV_NAIS_DEV_KIMFOO }}
         CLUSTER: dev
         RESOURCE: nais.yaml
         VAR: image=${{ env.REGISTRY }}/tracing-demo@${{ steps.build-push.outputs.digest }}
