@@ -74,7 +74,7 @@ jobs:
     - uses: actions/checkout@v3
     - uses: nais/deploy/actions/deploy@v1
       env:
-        SERVER: deploy.dev-nais.cloud.nais.io:443
+        DEPLOY_SERVER: deploy.dev-nais.cloud.nais.io:443
         APIKEY: ${{ secrets.DEPLOY_DEV_NAIS_DEV_KIMFOO }}
         CLUSTER: dev
         RESOURCE: nais.yaml
