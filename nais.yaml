@@ -9,7 +9,7 @@ spec:
   image: {{ image }}
   ingresses:
   - https://tracing-demo.dev.dev-nais.cloud.nais.io
-  port: 3000
+  port: 8080
   replicas:
     cpuThresholdPercentage: 50
     max: 1
