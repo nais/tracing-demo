@@ -75,12 +75,7 @@ func main() {
 func (h *Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	prop := otel.GetTextMapPropagator()
 	ctx := prop.Extract(r.Context(), propagation.HeaderCarrier(r.Header))
-	//prop.Inject(r.Context(), propagation.HeaderCarrier(w.Header()))
-
-	parentSpan := trace.SpanFromContext(ctx)
 	link := trace.LinkFromContext(ctx)
-	ctx = trace.ContextWithSpan(ctx, parentSpan)
-	//parentSpan.AddEvent("foobar happened")
 
 	tracer := otel.Tracer(h.Config.TraceName)
 	ctx, span := tracer.Start(ctx, "ServeHTTP", trace.WithLinks(link))
