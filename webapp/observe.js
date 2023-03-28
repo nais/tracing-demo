@@ -4,7 +4,7 @@ import {faro} from '@grafana/faro-web-sdk';
 const {trace, context} = faro.api.getOTEL();
 
 const tracer = trace.getTracer('default');
-const span = tracer.startSpan("let's fibonacci this shti");
+const span = tracer.startSpan("demo frontend span");
 
 context.with(trace.setSpan(context.active(), span), () => {
     faro.api.pushMeasurement({
