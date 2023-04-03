@@ -1,5 +1,5 @@
 FROM node AS builder
-ADD . /src
+ADD webapp/ /src
 WORKDIR /src
 RUN npm install
 RUN npm run build

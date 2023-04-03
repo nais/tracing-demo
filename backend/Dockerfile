@@ -3,10 +3,10 @@ RUN apk add --no-cache git make curl build-base
 ENV GOOS=linux
 
 WORKDIR /src
-COPY go.mod /src/
-COPY go.sum /src/
+COPY backend/go.mod /src/
+COPY backend/go.sum /src/
 RUN go mod download
-COPY . /src/
+COPY backend /src/
 RUN make build
 
 FROM alpine:3.15
