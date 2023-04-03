@@ -6,7 +6,7 @@ metadata:
   name: tracing-demo-frontend
   namespace: {{ namespace }}
 spec:
-  image: {{ frontend-image }}
+  image: {{ frontend_image }}
   ingresses:
   - {{ ingress }}
   port: 8080
@@ -23,7 +23,7 @@ metadata:
   name: tracing-demo-backend
   namespace: {{ namespace }}
 spec:
-  image: {{ backend-image }}
+  image: {{ backend_image }}
   ingresses:
   - {{ ingress }}/api
   port: 8080
