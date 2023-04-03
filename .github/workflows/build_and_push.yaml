@@ -54,7 +54,7 @@ jobs:
         CLUSTER: dev-gcp
         RESOURCE: nais.yaml
         PRINT_PAYLOAD: "true"
-        VAR: backend_image=${{ env.REGISTRY }}/tracing-demo-backend:${{ needs.build_push_sign_backend.outputs.version }},frontend-image=${{ env.REGISTRY }}/tracing-demo-frontend:${{ needs.build_push_sign_webapp.outputs.version }},ingress=https://tracing-demo.intern.dev.nav.no,namespace=aura
+        VAR: backend_image=${{ needs.build_push_sign_backend.outputs.tag }},frontend-image=${{ needs.build_push_sign_webapp.outputs.tag }},ingress=https://tracing-demo.intern.dev.nav.no,namespace=aura
     - uses: nais/deploy/actions/deploy@v1
       env:
         DEPLOY_SERVER: deploy.dev-nais.cloud.nais.io:443
@@ -62,4 +62,4 @@ jobs:
         CLUSTER: dev
         RESOURCE: nais.yaml
         PRINT_PAYLOAD: "true"
-        VAR: backend_image=${{ env.REGISTRY }}/tracing-demo-backend:${{ needs.build_push_sign_backend.outputs.version }},frontend-image=${{ env.REGISTRY }}/tracing-demo-frontend:${{ needs.build_push_sign_webapp.outputs.version }},ingress=https://tracing-demo.dev.nav.cloud.nais.io,namespace=kimfoo
+        VAR: backend_image=${{ needs.build_push_sign_backend.outputs.tag }},frontend-image=${{ needs.build_push_sign_webapp.outputs.tag }},ingress=https://tracing-demo.dev.nav.cloud.nais.io,namespace=kimfoo
