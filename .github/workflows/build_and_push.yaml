@@ -10,7 +10,7 @@ on:
 env:
   REGISTRY: europe-north1-docker.pkg.dev/nais-io/nais/images
 jobs:
-  build_push_sign-webapp:
+  build_push_sign_webapp:
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -24,7 +24,7 @@ jobs:
           google_service_account: gh-unleash
           push: ${{ github.actor != 'dependabot[bot]' }}
           workload_identity_provider: ${{ secrets.NAIS_IO_WORKLOAD_IDENTITY_PROVIDER }}
-  build_push_sign-backend:
+  build_push_sign_backend:
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -42,7 +42,7 @@ jobs:
     permissions:
       id-token: write
     name: Deploy to NAIS
-    needs: ["build_and_push"]
+    needs: ["build_and_push_frontend", "build_and_push_backend"]
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
     steps:
@@ -54,7 +54,7 @@ jobs:
         CLUSTER: dev-gcp
         RESOURCE: nais.yaml
         PRINT_PAYLOAD: "true"
-        VAR: backend-image=${{ env.REGISTRY }}/tracing-demo-backend:${{ needs.build_and_push.outputs.version }},frontend-image=${{ env.REGISTRY }}/tracing-demo-frontend:${{ needs.build_and_push.outputs.version }},ingress=https://tracing-demo.intern.dev.nav.no,namespace=aura
+        VAR: backend-image=${{ env.REGISTRY }}/tracing-demo-backend:${{ needs.build_and_push_backend.outputs.version }},frontend-image=${{ env.REGISTRY }}/tracing-demo-frontend:${{ needs.build_and_push_frontend.outputs.version }},ingress=https://tracing-demo.intern.dev.nav.no,namespace=aura
     - uses: nais/deploy/actions/deploy@v1
       env:
         DEPLOY_SERVER: deploy.dev-nais.cloud.nais.io:443
@@ -62,4 +62,4 @@ jobs:
         CLUSTER: dev
         RESOURCE: nais.yaml
         PRINT_PAYLOAD: "true"
-        VAR: backend-image=${{ env.REGISTRY }}/tracing-demo-backend:${{ needs.build_and_push.outputs.version }},frontend-image=${{ env.REGISTRY }}/tracing-demo-frontend:${{ needs.build_and_push.outputs.version }},ingress=https://tracing-demo.dev.nav.cloud.nais.io,namespace=kimfoo
+        VAR: backend-image=${{ env.REGISTRY }}/tracing-demo-backend:${{ needs.build_and_push_backend.outputs.version }},frontend-image=${{ env.REGISTRY }}/tracing-demo-frontend:${{ needs.build_and_push_frontend.outputs.version }},ingress=https://tracing-demo.dev.nav.cloud.nais.io,namespace=kimfoo
