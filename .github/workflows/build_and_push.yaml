@@ -21,7 +21,7 @@ jobs:
         with:
           name: tracing-demo-frontend
           dockerfile: ./webapp/Dockerfile
-          google_service_account: gh-unleash
+          google_service_account: gh-tracing-demo
           push: ${{ github.actor != 'dependabot[bot]' }}
           workload_identity_provider: ${{ secrets.NAIS_IO_WORKLOAD_IDENTITY_PROVIDER }}
   build_push_sign_backend:
@@ -35,7 +35,7 @@ jobs:
         with:
           name: tracing-demo-backend
           dockerfile: ./backend/Dockerfile
-          google_service_account: gh-unleash
+          google_service_account: gh-tracing-demo
           push: ${{ github.actor != 'dependabot[bot]' }}
           workload_identity_provider: ${{ secrets.NAIS_IO_WORKLOAD_IDENTITY_PROVIDER }}
   rollout:
