@@ -1,5 +1,5 @@
 'use strict';
-
+const { HttpInstrumentation } = require('@opentelemetry/instrumentation-http');
 const opentelemetry = require("@opentelemetry/sdk-node");
 const api = require('@opentelemetry/api');
 const { getNodeAutoInstrumentations } = require('@opentelemetry/auto-instrumentations-node');
@@ -16,7 +16,7 @@ const sdk = new opentelemetry.NodeSDK({
   traceExporter: traceOtlpExporter,
   metricExporter: metricOtlpExporter,
   autoDetectResources: true,
-  instrumentations: [getNodeAutoInstrumentations()],
+    instrumentations: [getNodeAutoInstrumentations(), new HttpInstrumentation()],
 });
 
 sdk.start()
