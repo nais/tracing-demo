@@ -1,26 +1,22 @@
-const OpenTelemetry = require("@opentelemetry/sdk-node");
-const Resources = require("@opentelemetry/resources");
-const SemanticConventions = require("@opentelemetry/semantic-conventions");
-const InstrumentationHttp = require("@opentelemetry/instrumentation-http");
-const InstrumentationExpress = require("@opentelemetry/instrumentation-express");
-const ExporterTraceOtlpHttp = require("@opentelemetry/exporter-trace-otlp-http");
-const TraceNode = require("@opentelemetry/sdk-trace-node")
+'use strict';
+
+const opentelemetry = require("@opentelemetry/sdk-node");
+const api = require('@opentelemetry/api');
 const { getNodeAutoInstrumentations } = require('@opentelemetry/auto-instrumentations-node');
+const { OTLPTraceExporter } = require('@opentelemetry/exporter-trace-otlp-grpc');
+const { OTLPMetricExporter } = require("@opentelemetry/exporter-metrics-otlp-grpc");
 
-const sdk = new OpenTelemetry.NodeSDK({
-  resource: new Resources.Resource({
-    [SemanticConventions.SemanticResourceAttributes.SERVICE_NAME]: "my-service",
-  }),
-    traceExporter: new ExporterTraceOtlpHttp.OTLPTraceExporter({
-        url: "http://127.0.0.1:4317"
-   }),
-  instrumentations: [
-    new InstrumentationHttp.HttpInstrumentation(),
-      new InstrumentationExpress.ExpressInstrumentation(),
-      getNodeAutoInstrumentations()
-
-  ],
+const traceOtlpExporter = new OTLPTraceExporter({
 });
 
-console.log("sdk")
+const metricOtlpExporter = new OTLPMetricExporter({
+});
+
+const sdk = new opentelemetry.NodeSDK({
+  traceExporter: traceOtlpExporter,
+  metricExporter: metricOtlpExporter,
+  autoDetectResources: true,
+  instrumentations: [getNodeAutoInstrumentations()],
+});
+
 sdk.start()
