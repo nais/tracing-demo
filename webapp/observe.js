@@ -22,11 +22,10 @@ context.with(trace.setSpan(context.active(), span), () => {
             })
         })
         .catch((e) => {
-            faro.api.pushLog(`got an error: ${e}`);
+            faro.api.pushLog([`got an error: ${e}`]);
         });
 
     faro.api.pushLog(['nais tracing says hello']);
 
     span.end();
 });
-
