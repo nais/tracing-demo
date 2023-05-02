@@ -7,8 +7,6 @@ metrics:
     scrape_interval: 1m
   configs:
     - name: default
-      remote_write:
-        - url: http://prometheus:9090/api/v1/write
 logs:
   positions_directory: /agent/loki-pos
   configs:
