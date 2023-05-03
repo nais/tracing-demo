@@ -4,10 +4,16 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite App</title>
+    <title>Fe tracing demo</title>
   </head>
   <body>
-    <div id="app"></div>
+    <main id="app">
+      <h3>These buttons will log results that are viewable in Loki</h3>
+      <button id="throwButton">Throw exception</button>
+      <button id="consoleErrorButton">Log error to console</button>
+      <button id="faroEventButton">Trigger Faro event</button>
+    </main>
+
     <script type="module" src="/main.js"></script>
     <script type="module" src="/observe.js"></script>
   </body>
