@@ -17,5 +17,5 @@ This will set up the following services:
 - Loki, only available inside Docker
 
 When you first log into grafana on this local setup you will need to set up Loki and Tempo
-as datasources. Click configuration in the left hand menu and choose "data sources" then add Tempo
-and Loki followed by "Save and test" on each respective datasource.
+as datasources. Click configuration in the left hand menu and choose "data sources" then add Tempo (url: http://tempo:3100)
+and Loki (url: http://loki:3100) followed by "Save and test" on each respective datasource.
