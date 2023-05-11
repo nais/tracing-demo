@@ -1,4 +1,12 @@
 export default {
+  build: {
+    manifest: true,
+    rollupOptions: {
+      external: [
+        "./nais.js",
+      ],
+    },
+  },
 	server: {
 		proxy: {
 			'/grafana': {

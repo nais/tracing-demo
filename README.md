@@ -1,5 +1,10 @@
 # tracing-demo
-Demo app for NAIS tracing based on Grafana stack
+
+Demo app for NAIS tracing based on Grafana stack.
+
+This repository contains a `docker-compose` stack that sets up the observability stack locally on your computer.
+
+Also doubles as a canary to test the Naiserator frontend integration.
 
 ## Local testing of logging stack
 
