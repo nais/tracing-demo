@@ -7,6 +7,9 @@ metadata:
   namespace: {{ namespace }}
 spec:
   image: {{ frontend_image }}
+  frontend:
+    generatedConfig:
+      mountPath: /usr/share/nginx/html/nais.js
   ingresses:
   - {{ ingress }}
   port: 8080
