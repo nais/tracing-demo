@@ -29,6 +29,11 @@ spec:
   image: {{ backend_image }}
   ingresses:
   - {{ ingress }}/api
+  env:
+  - name: "ENDPOINT"
+    value: "tempo-distributor.nais-system:4317"
+  - name: "LISTEN_ADDR"
+    value: "0.0.0.0:8080"
   port: 8080
   replicas:
     cpuThresholdPercentage: 50
