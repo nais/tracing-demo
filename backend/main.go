@@ -27,6 +27,7 @@ const progName = "tracing-demo-backend"
 type Config struct {
 	ListenAddress string `envconfig:"LISTEN_ADDR" default:"127.0.0.1:8080"`
 	TraceName     string `envconfig:"TRACE_NAME" default:"github.com/nais/tracing-demo/backend"`
+	Endpoint      string `envconfig:"ENDPOINT" default:"localhost:4317"`
 }
 
 type Request struct {
@@ -48,7 +49,7 @@ func main() {
 		panic(err)
 	}
 
-	tp, err := newProvider(os.Stdout)
+	tp, err := newProvider(os.Stdout, cfg.Endpoint)
 	if err != nil {
 		panic(err)
 	}
@@ -124,8 +125,8 @@ func Fibonacci(ctx context.Context, n uint) (uint, error) {
 	return n2 + n1, nil
 }
 
-func newProvider(w io.Writer) (*sdk_trace.TracerProvider, error) {
-	exp, err := newExporter(w)
+func newProvider(w io.Writer, endpoint string) (*sdk_trace.TracerProvider, error) {
+	exp, err := newExporter(endpoint)
 	if err != nil {
 		return nil, err
 	}
@@ -137,10 +138,10 @@ func newProvider(w io.Writer) (*sdk_trace.TracerProvider, error) {
 }
 
 // newExporter returns a console exporter.
-func newExporter(w io.Writer) (sdk_trace.SpanExporter, error) {
+func newExporter(endpoint string) (sdk_trace.SpanExporter, error) {
 	return otlptracegrpc.New(
 		context.Background(),
-		otlptracegrpc.WithEndpoint("localhost:4317"),
+		otlptracegrpc.WithEndpoint(endpoint),
 		otlptracegrpc.WithInsecure(),
 	)
 }
