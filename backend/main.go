@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"net/url"
 
 	"github.com/kelseyhightower/envconfig"
 	"go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp"
@@ -26,7 +27,7 @@ const tracerName = ""
 
 type Config struct {
 	ListenAddress string `envconfig:"LISTEN_ADDR" default:"127.0.0.1:8080"`
-	Endpoint      string `envconfig:"ENDPOINT" default:"localhost:4317"`
+	Endpoint      string `envconfig:"OTEL_EXPORTER_OTLP_ENDPOINT" default:"http://localhost:4317"`
 }
 
 type Request struct {
@@ -157,10 +158,18 @@ func newProvider(endpoint string) (*sdk_trace.TracerProvider, error) {
 
 // newExporter returns a console exporter.
 func newExporter(endpoint string) (sdk_trace.SpanExporter, error) {
+	u, err := url.Parse(endpoint)
+	if err != nil {
+		return nil, fmt.Errorf("parse tracing endpoint: %w", err)
+	}
+	opts := make([]otlptracegrpc.Option, 0)
+	opts = append(opts, otlptracegrpc.WithEndpoint(u.Hostname()+":"+u.Port()))
+	if u.Scheme == "http" {
+		opts = append(opts, otlptracegrpc.WithInsecure())
+	}
 	return otlptracegrpc.New(
 		context.Background(),
-		otlptracegrpc.WithEndpoint(endpoint),
-		otlptracegrpc.WithInsecure(),
+		opts...,
 	)
 }
 
