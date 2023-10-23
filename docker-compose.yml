@@ -38,6 +38,7 @@ services:
     image: grafana/loki
     command:
       - "-server.http-listen-address=0.0.0.0"
+      - "-query-scheduler.max-outstanding-requests-per-tenant=2048"
       - "-config.file=/etc/loki/local-config.yaml"
     volumes:
       - loki:/loki
