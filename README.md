@@ -18,7 +18,7 @@ This will set up the following services:
 
 - Grafana at http://localhost:3500, use it to explore your collected data
 - Grafana Agent at `http://localhost:12347/collect`, use it to collect data from your frontend application
-- Tempo, available on gRPC at localhost:4317, use it to collect traces from your backend
+- Tempo, available on gRPC at `localhost:4317`, use it to collect traces from your backend
 - Loki, only available inside Docker
 
 ## See also
