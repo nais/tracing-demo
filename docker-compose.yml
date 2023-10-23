@@ -53,5 +53,6 @@ services:
       - GF_AUTH_BASIC_ENABLED=false
     volumes:
       - grafana:/var/lib/grafana
+      - ./docker/grafana-datasources:/etc/grafana/provisioning/datasources
     ports:
       - "3500:3000"
