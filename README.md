@@ -23,4 +23,4 @@ This will set up the following services:
 
 ## See also
 
-- [NAIS documentation: Frontend application observability](https://docs.nais.io/observability/frontend/))
+- [NAIS documentation: Frontend application observability](https://docs.nais.io/observability/frontend/)
