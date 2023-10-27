@@ -38,6 +38,8 @@ services:
     image: grafana/loki
     command:
       - "-server.http-listen-address=0.0.0.0"
+      # Grafana issues a lot of queries for the web vitals dashboard.
+      # Increased from current default of 100 to prevent HTTP 429.
       - "-query-scheduler.max-outstanding-requests-per-tenant=2048"
       - "-config.file=/etc/loki/local-config.yaml"
     volumes:
@@ -48,14 +50,19 @@ services:
   grafana:
     image: grafana/grafana:9.4.9
     environment:
+      # Disable authentication.
       - GF_AUTH_DISABLE_LOGIN_FORM=true
+      - GF_AUTH_BASIC_ENABLED=false
+      # Permit unauthenticated access as administrator.
       - GF_AUTH_ANONYMOUS_ENABLED=true
       - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
-      - GF_AUTH_BASIC_ENABLED=false
+      # Override landing page dashboard.
       - GF_DASHBOARDS_DEFAULT_HOME_DASHBOARD_PATH=/var/lib/grafana/dashboards/web-vitals.json
     volumes:
       - grafana:/var/lib/grafana
-      - ./grafana/dashboards:/var/lib/grafana/dashboards
+      # Autoconfigure data sources and dashboards on spin-up.
       - ./grafana/provisioning:/etc/grafana/provisioning
+      # Dashboards in this directory are automatically added.
+      - ./grafana/dashboards:/var/lib/grafana/dashboards
     ports:
       - "3500:3000"
