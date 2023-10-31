@@ -16,11 +16,11 @@ docker-compose up
 
 This will set up the following services:
 
-- Grafana at (admin:admin) http://localhost:3500, use it to explore your collected data
-- Grafana Agent at http://localhost:12347, use it to collect data from your frontend app
-- Tempo, available on gRPC at localhost:4317, use it to collect traces from your backend
+- Grafana at http://localhost:3500, use it to explore your collected data
+- Grafana Agent at `http://localhost:12347/collect`, use it to collect data from your frontend application
+- Tempo, available on gRPC at `localhost:4317`, use it to collect traces from your backend
 - Loki, only available inside Docker
 
-When you first log into grafana on this local setup you will need to set up Loki and Tempo
-as datasources. Click configuration in the left hand menu and choose "data sources" then add Tempo (url: http://tempo:3100)
-and Loki (url: http://loki:3100) followed by "Save and test" on each respective datasource.
+## See also
+
+- [NAIS documentation: Frontend application observability](https://docs.nais.io/observability/frontend/)
