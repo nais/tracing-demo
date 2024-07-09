@@ -1,4 +1,4 @@
-FROM golang:1.20.2-alpine as builder
+FROM golang:1.22-alpine as builder
 RUN apk add --no-cache git make curl build-base
 ENV GOOS=linux
 
@@ -9,7 +9,7 @@ RUN go mod download
 COPY backend /src/
 RUN make build
 
-FROM alpine:3.15
+FROM alpine:3.20
 RUN apk add --no-cache ca-certificates tzdata
 RUN export PATH=$PATH:/app
 WORKDIR /app
