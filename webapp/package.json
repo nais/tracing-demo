@@ -9,7 +9,7 @@
     "preview": "vite preview"
   },
   "devDependencies": {
-    "vite": "^4.5.2"
+    "vite": "^4.5.5"
   },
   "dependencies": {
     "@grafana/faro-web-tracing": "^1.0.0"
